@@ -7,13 +7,12 @@
    become: true
    become_method: sudo
    become_user: root
-   gather_facts: false
    roles:
     - setup
    pre_tasks:
     - name: "wait 600 seconds for target connection to become reachable/usable."
       wait_for_connection:
-      
+
     - name: "install python for Ansible."
       become: true
       raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
