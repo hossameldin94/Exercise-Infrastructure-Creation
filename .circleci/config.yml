@@ -28,6 +28,9 @@ jobs:
      - run:
          name: Run Playbook and Configure server
          command: |
+              cat inventory.txt 
+              pwd
+              ls -l
              ansible-playbook -i inventory.txt main1.yml               
 workflows:
   configure_infrastructure-workflow:
