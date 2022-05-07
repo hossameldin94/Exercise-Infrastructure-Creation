@@ -1,37 +1,37 @@
 version: 2.1
 jobs:
-  # create_infrastructure: 
-  #     docker:
-  #       - image: amazon/aws-cli
-  #     steps:
-  #       - checkout
-  #       - run:
-  #           name: Create Cloudformation Stack
-  #           command: |
-  #             aws cloudformation deploy \
-  #               --template-file template.yml \
-  #               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
-  #               --region us-east-1  
+  create_infrastructure: 
+      docker:
+        - image: amazon/aws-cli
+      steps:
+        - checkout
+        - run:
+            name: Create Cloudformation Stack
+            command: |
+              aws cloudformation deploy \
+                --template-file template.yml \
+                --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+                --region us-east-1  
 # Exercise: Config and Deployment
- configure_infrastructure: 
-   docker:
-     - image: python:3.7-alpine3.11
-   steps:
-     - checkout
-     - add_ssh_keys:
-             # You can get this ID in the section where you registered the SSH Key
-             fingerprints: ["97:8f:aa:81:e8:ab:59:8c:3d:a3:72:bd:18:95:c9:fe"] 
-     - run:
-         name: Install Ansible
-         command: |
-           apk add --update ansible
-     - run:
-         name: Run Playbook and Configure server
-         command: |
-           ansible-playbook main.yml -i inventory.txt                
+#  configure_infrastructure: 
+#    docker:
+#      - image: python:3.7-alpine3.11
+#    steps:
+#      - checkout
+#      - add_ssh_keys:
+#              # You can get this ID in the section where you registered the SSH Key
+#              fingerprints: ["97:8f:aa:81:e8:ab:59:8c:3d:a3:72:bd:18:95:c9:fe"] 
+#      - run:
+#          name: Install Ansible
+#          command: |
+#            apk add --update ansible
+#      - run:
+#          name: Run Playbook and Configure server
+#          command: |
+#            ansible-playbook main.yml -i inventory.txt                
 workflows:
-  configure_infrastructure-workflow:
+  create_infrastructure-workflow:
     jobs:
-      - configure_infrastructure
+      - create_infrastructure
 
 
