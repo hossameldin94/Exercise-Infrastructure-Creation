@@ -1,9 +1,10 @@
 ---
+
 - name: "configuration play"
   hosts: all
   user: ubuntu
-  become: true
   gather_facts: false
+  
   vars:
     - ansible_python_interpreter: /usr/bin/python3
     - ansible_host_key_checking: false
@@ -18,6 +19,5 @@
       raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
       changed_when: false
 
-    - setup:
   roles:
     - configure-server
